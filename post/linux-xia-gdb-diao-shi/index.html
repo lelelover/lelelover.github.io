@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>linux下GDB调试 | 阿元的blog</title>
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://lelelover.github.io/favicon.ico?v=1574863112771">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://lelelover.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://lelelover.github.io">
+        <img src="https://lelelover.github.io/images/avatar.png?v=1574863112771" class="site-logo">
+        <h1 class="site-title">阿元的blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://lelelover.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">linux下GDB调试</h2>
+            <div class="post-date">2019-11-27</div>
+            
+            <div class="post-content">
+              <h6 id="gdb的使用">GDB的使用</h6>
+<p>编译代码添加符号表<br>
+GCC -g -o xxxx.obj xxxx.c xxx.c<br>
+xxxx.obj是符号表既汇编生成目标文件，</p>
+<p>加上-g 选项，会保留代码的文字信息</p>
+<p>gbd中使用run是全速运行，使用start是一步一步执行。<br>
+程序正在运行时，使用</p>
+<pre><code>gdb -p pid
+</code></pre>
+<p>使程序暂停，要使用PID号<br>
+也可以用在gdb中使用</p>
+<pre><code>attach pid
+</code></pre>
+<p>如果函数需要传入参数，则在调试时(gdb界面)，使用 一下 命令实现。</p>
+<pre><code>run 参数1 参数2
+</code></pre>
+<p>以下可以使调试界面分为代码界面和gdb调试界面</p>
+<pre><code>gbd -tui  (可执行文件名)
+</code></pre>
+<p>cgdb程序也是可以的，但需要独立安装。</p>
+<p>gdb界面，使用step函数命令去执行函数里的内容。</p>
+<h6 id="gdb命令">GDB命令</h6>
+<ul>
+<li>禁止断点</li>
+</ul>
+<pre><code>disable b1
+</code></pre>
+<ul>
+<li>使能断点</li>
+</ul>
+<pre><code>enable b2
+</code></pre>
+<ul>
+<li>条件判断</li>
+</ul>
+<p>用法：break [break-args] if (condition)</p>
+<p>例如：</p>
+<p>​	break main if argc &gt; 1<br>
+​	break 180 if (string == NULL &amp;&amp; i &lt; 0)<br>
+​	break test.c:34 if (x &amp; y) == 1<br>
+​	break myfunc if i % (j + 3) != 0<br>
+​	break 44 if strlen(mystring) == 0</p>
+<ul>
+<li>监视点(watch)</li>
+</ul>
+<p>用法：watch i</p>
+<p>当i的值发生变化时，程序停下来。</p>
+<p>watch i &gt; 999</p>
+<p>一旦i &gt; 999，程序就会被中断，GDB指出改变条件的代码。</p>
+<ul>
+<li>
+<p>显示数据</p>
+<p>具体使用如下</p>
+<ul>
+<li>print   变量</li>
+<li>p  *指针</li>
+<li>p  &amp;变量
+<ul>
+<li>查看变量地址</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>显示内存</p>
+<ul>
+<li>x   /Nuf  exprerssion
+<ul>
+<li>n表示显示的个数</li>
+<li>u表示显示的单位
+<ul>
+<li>b    单字节 ；h    双字节；w    四字节；g	8字节</li>
+</ul>
+</li>
+<li>f对应格式
+<ul>
+<li>x 16进制；d有符号10进制；u无符号10进制；c字符</li>
+</ul>
+</li>
+<li>expression   显示内存的地址</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>修改变量</p>
+<p>使用方法如下：</p>
+<p>set  var  i=32</p>
+</li>
+<li>
+<p>执行</p>
+<ul>
+<li>next/n</li>
+<li>step</li>
+<li>contiune/c</li>
+</ul>
+</li>
+</ul>
+<p>next表示跳往当前代码栈中的下一条指令，如果下一条指令是函数调用，并且函数中存在断点，则直接跑到该断点中止。</p>
+<p>continue 表示跳往下一个断点， next和continue的区别是： 在当前代码堆栈中，step和next都会一条条的执行，而continue直接跑到下一个断点去执行去了。 如果当前代码中调用的是函数栈，则next和continue没有任何区别【直接跑到断点处中止】。</p>
+<p>step 和next 在当前代码栈中相似，都是一条条语句执行，不同的是在函数栈调用时，next进入的方式直接跑到断点处中止(所以叫做&quot;下一个&quot;)，step是从函数栈的起始位置中止(所以叫做“单步”)。</p>
+<ul>
+<li>查看汇编
+<ul>
+<li>disass</li>
+<li>display  /i $pc</li>
+</ul>
+</li>
+<li>layout
+<ul>
+<li>layout src</li>
+<li>layout asm</li>
+<li>layout split</li>
+<li>退出  ctrl+x  再按a</li>
+</ul>
+</li>
+<li>多进程
+<ul>
+<li>set follow-fork-mode child/ parent</li>
+</ul>
+</li>
+<li>多进程
+<ul>
+<li>info thread</li>
+<li>thread xx</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://lelelover.github.io/post/hello-gridea">
+                  <h3 class="post-title">
+                    Hello Gridea
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
