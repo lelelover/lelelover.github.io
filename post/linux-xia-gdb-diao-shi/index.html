@@ -7,7 +7,7 @@
 <meta name="description" content="温故而知新">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="https://lelelover.github.io/favicon.ico?v=1574864080770">
+<link rel="shortcut icon" href="https://lelelover.github.io/favicon.ico?v=1574864186960">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
@@ -144,36 +144,20 @@ xxxx.obj是符号表既汇编生成目标文件，</p>
 <li>
 <p>显示数据</p>
 <p>具体使用如下</p>
-<ul>
-<li>print   变量</li>
-<li>p  *指针</li>
-<li>p  &amp;变量
-<ul>
-<li>查看变量地址</li>
-</ul>
-</li>
-</ul>
+<p>print   变量<br>
+p  *指针<br>
+p  &amp;变量<br>
+查看变量地址</p>
 </li>
 <li>
-<p>显示内存</p>
-<ul>
-<li>x   /Nuf  exprerssion
-<ul>
-<li>n表示显示的个数</li>
-<li>u表示显示的单位
-<ul>
-<li>b    单字节 ；h    双字节；w    四字节；g	8字节</li>
-</ul>
-</li>
-<li>f对应格式
-<ul>
-<li>x 16进制；d有符号10进制；u无符号10进制；c字符</li>
-</ul>
-</li>
-<li>expression   显示内存的地址</li>
-</ul>
-</li>
-</ul>
+<p>显示内存<br>
+x   /Nuf  exprerssion<br>
+n表示显示的个数<br>
+u表示显示的单位<br>
+b    单字节 ；h    双字节；w    四字节；g	8字节<br>
+f对应格式<br>
+x 16进制；d有符号10进制；u无符号10进制；c字符<br>
+expression   显示内存的地址</p>
 </li>
 <li>
 <p>修改变量</p>
@@ -182,42 +166,28 @@ xxxx.obj是符号表既汇编生成目标文件，</p>
 </li>
 <li>
 <p>执行</p>
-<ul>
-<li>next/n</li>
-<li>step</li>
-<li>contiune/c</li>
-</ul>
+<p>next/n<br>
+step<br>
+contiune/c</p>
 </li>
 </ul>
 <p>next表示跳往当前代码栈中的下一条指令，如果下一条指令是函数调用，并且函数中存在断点，则直接跑到该断点中止。</p>
 <p>continue 表示跳往下一个断点， next和continue的区别是： 在当前代码堆栈中，step和next都会一条条的执行，而continue直接跑到下一个断点去执行去了。 如果当前代码中调用的是函数栈，则next和continue没有任何区别【直接跑到断点处中止】。</p>
 <p>step 和next 在当前代码栈中相似，都是一条条语句执行，不同的是在函数栈调用时，next进入的方式直接跑到断点处中止(所以叫做&quot;下一个&quot;)，step是从函数栈的起始位置中止(所以叫做“单步”)。</p>
 <ul>
-<li>查看汇编
-<ul>
-<li>disass</li>
-<li>display  /i $pc</li>
-</ul>
-</li>
-<li>layout
-<ul>
-<li>layout src</li>
-<li>layout asm</li>
-<li>layout split</li>
-<li>退出  ctrl+x  再按a</li>
-</ul>
-</li>
-<li>多进程
-<ul>
-<li>set follow-fork-mode child/ parent</li>
-</ul>
-</li>
-<li>多进程
-<ul>
-<li>info thread</li>
-<li>thread xx</li>
-</ul>
-</li>
+<li>查看汇编<br>
+disass<br>
+display  /i $pc<br>
+layout<br>
+layout src<br>
+layout asm<br>
+layout split<br>
+退出  ctrl+x  再按a</li>
+<li>多进程<br>
+set follow-fork-mode child/ parent</li>
+<li>多进程<br>
+info thread<br>
+thread xx</li>
 </ul>
 
             </div>
@@ -231,7 +201,7 @@ xxxx.obj是符号表既汇编生成目标文件，</p>
 
       <div class="sm-12 md-4 col sidebar">
   <div class="paper info-container">
-    <img src="https://lelelover.github.io/images/avatar.png?v=1574864080770" class="no-responsive avatar">
+    <img src="https://lelelover.github.io/images/avatar.png?v=1574864186960" class="no-responsive avatar">
     <div class="text-muted">温故而知新</div>
     <div class="social-container">
       
